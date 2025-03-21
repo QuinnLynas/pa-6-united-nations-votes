@@ -293,28 +293,29 @@ Now that we know how to join the data, we will use the following code to examine
 Be sure to run the code via the green arrow on the code chunk, as the `case_when()` code can get finicky sometimes and claim an error about a comma in the code when it doesn't exist.  *Comment on the code where indicated* and add your chosen join function
 ```{r}
 roll_calls |> 
-  _________(issues, by = "rcid") |>  #join roll_calls and issues so that just the votes related to the issues data are retained.
+  right_join(issues, by = "rcid") |>  #join roll_calls and issues so that just the votes related to the issues data are retained.
   mutate(issue = case_when(
     issue == "Arms control and disarmament" ~ "Arms Control",
     issue == "Nuclear weapons and nuclear material" ~ "Nuclear Weapons",
-    issue == "Palestinian conflict" ~ "Palestinian Conflict")) |>   #what is happening in this mutate function?
+    issue == "Palestinian conflict" ~ "Palestinian Conflict")) |>   #Renaming observations for shorter names
   drop_na(issue) |> #drop NAs for values not defined in the previous line of code
   mutate(year = lubridate::year(date)) |> #create a column `year` that contains the year value
-  count(year, issue) |> #what does this line do?
-  ggplot(aes(x = year, y = n, group = issue)) + #what does this line do?
-  geom_line(aes(color = issue)) + #what does this line do?
+  count(year, issue) |> #counts issues per year
+  ggplot(aes(x = year, y = n, group = issue)) + #initialize ggplot, set aesthetics
+  geom_line(aes(color = issue)) + #sets the geometry as a line
   labs(x = "Year", y = "Number of Votes",
        title = "United Nations Votes per Year",
        subtitle = "Conflict and Arms Related Votes",
        color = "Voting Issue") +
-  theme_minimal()
+  theme_minimal() + 
+  scale_color_viridis_d(option = "mako", begin = 0.1, end = 0.8)
 ```
 
 
 
 
 What do you notice? What do you wonder based on the graph created?
-> Insert Answer Here
+> What is happening in the 1980's that required so many votes. What is going on now in regards with worldwide conflicts?
 
 
 
