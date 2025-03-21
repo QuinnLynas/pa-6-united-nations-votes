@@ -228,6 +228,7 @@ Does the above information help us understand the voting issues of the UN over t
 Finally we have the `issues` data which provides a more general description for each vote on specific issues.  Note that not all issues are included in the data set, just the ones related to the 6 issues below:
 
 ```{r}
+#|label: counts each type of vote
 issues |> 
   count(issue)
 ```
@@ -241,40 +242,45 @@ Now let's join our data together to get a better idea of how the UN has voted ov
 First, look at the number of rows in `issues` and `roll_calls` - do they match? What does this indicate?
 
 ```{r}
+#| label: dimesions of each dataset
 dim(issues)
 dim(roll_calls)
 ```
 
 
-> Insert Answer Here
+> shows the dimesion of each dataset, issues has less rows and columns than roll call.
 
 
 
 Now let's try joining the `roll_calls` with the `issues` data.  Compare the following codes to join the data. Describe what each one does and how it differs from the others as a comment in the code chunk.  You might need to reference the slides or reading for this week.
 
 ```{r}
+#| label: left-join
 roll_calls |> 
-  left_join(issues, by = "rcid") #description of join
+  left_join(issues, by = "rcid") #joins issues to roll calls by column rcid
 ```
 
 ```{r}
+#| label: right-joins
 roll_calls |> 
-  right_join(issues, by = "rcid") #description of join
+  right_join(issues, by = "rcid") #joins roll calls to issues by rcid
 ```
 
 ```{r}
+#| label: full-join
 roll_calls |> 
-  full_join(issues, by = "rcid") #description of join
+  full_join(issues, by = "rcid") #joins the datasets without deleting anything from either
 ```
 
 ```{r}
+#| label: inner-join
 roll_calls |> 
-  inner_join(issues, by = "rcid") #description of join
+  inner_join(issues, by = "rcid") #joins only matching values in both datasets, deletes everything not matching
 ```
 
 **If we are only interested in retaining the records associated with the `issues` labeled in our data, which join(s) should we use?**
 
-> Insert answer here
+> Right join and full join.
 
 
 
