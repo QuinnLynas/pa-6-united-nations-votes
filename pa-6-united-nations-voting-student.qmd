@@ -391,7 +391,7 @@ yes_votes |>
 
 What do you notice about the voting records over time? 
 
->Insert Answer Here
+> The US and Canada are pretty split on most of the voting issues.
 
 
 
@@ -425,29 +425,29 @@ Next, your instructor took the `yes_votes` data and filtered out just the United
 Comment the code below: 
 ```{r}
 yes_votes |> 
-  filter(country == "United States") |>  #comment
-  left_join(politics_year, by = c("year" = "start_year")) |> #comment
-  group_by(issue) |>  #comment
-  mutate(predict = predict(loess(percent_yes~year))) |>  #comment
-  ggplot(mapping = aes(x = year, color = party, group = 1)) + #comment
-  geom_point(aes(y = percent_yes),alpha = 0.4) + #comment
-  geom_line(aes(y = predict)) + #comment
-  facet_wrap(~issue) + #comment
-  scale_y_continuous(labels = scales::percent) + #comment
+  filter(country == "United States") |>  #filters just the US
+  left_join(politics_year, by = c("year" = "start_year")) |> #joins politics to yes votes 
+  group_by(issue) |>  #groups issues together
+  mutate(predict = predict(loess(percent_yes~year))) |>  #creates new variable called predict, using a linear model type transformation
+  ggplot(mapping = aes(x = year, color = party, group = 1)) + #initialize ggplot and set the aesthetics
+  geom_point(aes(y = percent_yes),alpha = 0.4) + #initializes geometry and sets y variable as percent_yes
+  geom_line(aes(y = predict)) + #initializes geometry and sets y variable as predict
+  facet_wrap(~issue) + #facet graph for each issue
+  scale_y_continuous(labels = scales::percent) + #scales the y-axis to a percent scale
   labs(
     title = "Percentage of 'Yes' votes in the UN General Assembly",
     subtitle = "1946 to 2015",
     y = "% Yes",
     x = "Year",
     color = "Country"
-  ) + #comment
-  theme_bw() + #comment
-  scale_color_manual(values = c("blue", "red")) + #comment
-  theme(legend.position = "bottom")  #comment
+  ) + #sets labels and titles
+  theme_bw() + #sets theme
+  scale_color_manual(values = c("blue", "red")) + #create color scale manually
+  theme(legend.position = "bottom")  #sets legened position to the bottom of the graph
 ```
 
 What do you notice? What do you wonder?
 
-> Insert your answer
+> Some issues do not have huge differences between parties, like Palestinian Conflict, but issues like economic development, nuclear weapons, and human rights seem more dependent. I think time period also has an affect on the voting percent as well.  
 
 
