@@ -137,28 +137,31 @@ The first data set, `unvotes` contains data on the `rcid` which is the roll call
 Comment on the following code, what is happening in each line?  One way to approach seeing what each line does is to highlight the code from before the `pipe` of that line up to the data `unvotes` and use `CTRL + ENTER` to run just the highlighted lines.  
 
 ```{r}
+#|label: clean-data-and-make-plot
 unvotes |> 
-  count(country, vote) |> #comment
-  group_by(country) |> #comment
-  mutate(total = sum(n)) |> #comment 
-  mutate(prop_vote = n/total) |> #comment
+  count(country, vote) |> #count of votes by country
+  group_by(country) |> #groups by country
+  mutate(total = sum(n)) |> #adds a new variable that is the total amount of rows 
+  mutate(prop_vote = n/total) |> #creates a new variable that calculates the proportion of votes
   filter(country %in% c("United States", "Canada", 
                         "Germany", "France",
                         "Italy", "Japan",
-                        "United Kingdom")) |> #comment
+                        "United Kingdom")) |> #filters out seven specific countries
   ggplot(aes(x = country, y = prop_vote, 
-             fill = vote)) + #comment
-  geom_col(position = position_stack()) + #comment
+             fill = vote)) + #starts ggplot and sets aesthetics
+  geom_col(position = position_stack()) + #sets as stacked column graph
   labs(x = "Group of Seven Countries",
        y = "Proportion of Votes",
        title = "Voting Record of the G7",
-       fill = "Vote") + #comment
-  theme_minimal() +  #comment
-  scale_fill_viridis_d(end = 0.8) + #comment
-  coord_flip() #comment
+       fill = "Vote") + #adds labs and titles
+  theme_minimal() +  #sets theme
+  scale_fill_viridis_d(end = 0.8) + #sets color scale
+  coord_flip() #flips x and y axis
 ```
 
-> Describe what the graph above demonstrates above UN voting records for the G7 
+> Describe what the graph above demonstrates above UN voting records for the G7
+
+> The majority of countries vote yes on over 50% of things. The US has the lowest rate of yes votes of all the countries.
   
   
   
